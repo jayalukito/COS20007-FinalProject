@@ -1,0 +1,16 @@
+@startuml
+class SalesController {
+    + SalesController()
+    + GetSalesRecords() : List<SalesRecord>
+    + Checkout() : Receipt
+    - ValidateCartStock(cart:Cart) : void
+    - ReduceInventoryStock(cart:Cart) : void
+    - CreatePurchasedItemsSnapshot(cart:Cart) : List<CartItem>
+    - GenerateReceiptId() : string
+    - GenerateSalesRecordId() : string
+    + GenerateReportByCategory(categoryId:string) : SalesReport
+    + GenerateReportByMonth(month:int, year:int) : SalesReport
+}
+SalesController o-> "supermarket" Supermarket
+SalesController --> "salesReport" SalesReport
+@enduml

@@ -2,7 +2,7 @@ using MyProject.Interface;
 
 namespace MyProject.Models;
 
-public class PurchaseTotalDiscountRule : DiscountRule, IDiscountable
+public class PurchaseTotalDiscountRule : DiscountRule, IDiscountable, IDisplayable
 {
     public decimal MinimumAmount { get; set; }
     public decimal DiscountPercent { get; set; }

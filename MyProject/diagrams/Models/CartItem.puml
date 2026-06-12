@@ -1,0 +1,10 @@
+@startuml
+class CartItem {
+    + Quantity : int <<get>> <<set>>
+    + CartItem(item:Item, quantity:int)
+    + GetSubtotal() : decimal
+    + UpdateQuantity(quantity:int) : void
+    + AddQuantity(quantity:int) : void
+}
+CartItem --> "Item" Item
+@enduml

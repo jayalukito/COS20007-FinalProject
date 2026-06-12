@@ -1,5 +1,6 @@
 namespace MyProject.Controllers;
 
+using System.Security.Cryptography;
 using MyProject.Controllers;
 using MyProject.Models;
 using MyProject.Utils;
@@ -7,6 +8,7 @@ using MyProject.Utils;
 public class SalesController 
 {
     private Supermarket supermarket = Supermarket.Instance;
+
     public SalesController()
     {
         supermarket = Supermarket.Instance;
@@ -166,5 +168,32 @@ public class SalesController
         int newNumber = highestNumber + 1;
 
         return "SR" + newNumber.ToString("D3");
+    }
+
+    public SalesReport GenerateReportByCategory(string categoryId)
+    {
+
+        SalesReport salesReport = new SalesReport(supermarket.SalesRecords);
+        try
+        {
+            return salesReport.FilterByCategory(categoryId);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
+    public SalesReport GenerateReportByMonth(int month, int year)
+    {
+        SalesReport salesReport = new SalesReport(supermarket.SalesRecords);
+        try
+        {
+            return salesReport.FilterByMonth(month, year);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 }

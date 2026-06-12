@@ -1,4 +1,4 @@
-namespace MyProject.Models;
+namespace MyProject.Enums;
 
 public enum ItemType
 {

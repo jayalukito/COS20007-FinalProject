@@ -1,0 +1,9 @@
+@startuml
+class Category {
+    + CategoryId : string <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + Category()
+    + Category(categoryId:string, name:string)
+    + GetDisplayInformation() : string
+}
+@enduml

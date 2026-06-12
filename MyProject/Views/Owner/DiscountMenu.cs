@@ -1,10 +1,11 @@
 namespace MyProject.Views;
 
 using MyProject.Controllers;
+using MyProject.Factories;
 using MyProject.Interface;
 using MyProject.Models;
 using MyProject.Utils;
-
+using MyProject.Enums;
 public class DiscountMenu : BaseMenu
 {
     private readonly DiscountController discountController = new();
@@ -100,25 +101,16 @@ public class DiscountMenu : BaseMenu
         Console.Clear();
         Console.WriteLine("=== Add Expiry Discount Rule ===");
 
-        string ruleId = discountController.GenerateDiscountRuleId();
         string name = InputHelper.ReadRequiredString("Rule name: ");
         int daysThreshold = InputHelper.ReadRequiredInt("Days threshold: ");
         decimal discountPercent = InputHelper.ReadRequiredDecimal("Discount percent: ");
 
         try
         {
-            ExpiryDiscountRule discountRule = new ExpiryDiscountRule(
-                ruleId,
-                name,
-                true,
-                daysThreshold,
-                discountPercent
-            );
-
+            DiscountRule discountRule = DiscountFactory.CreateDiscount(name, true, DiscountType.Expiry, discountPercent, daysThreshold);
             discountController.AddDiscountRule(discountRule);
 
             Console.WriteLine("Expiry discount rule added successfully.");
-            Console.WriteLine($"Generated Rule ID: {ruleId}");
         }
         catch (Exception ex)
         {
@@ -133,25 +125,23 @@ public class DiscountMenu : BaseMenu
         Console.Clear();
         Console.WriteLine("=== Add Purchase Total Discount Rule ===");
 
-        string ruleId = discountController.GenerateDiscountRuleId();
         string name = InputHelper.ReadRequiredString("Rule name: ");
         decimal minimumPurchase = InputHelper.ReadRequiredDecimal("Minimum purchase: ");
         decimal discountPercent = InputHelper.ReadRequiredDecimal("Discount percent: ");
 
         try
         {
-            PurchaseTotalDiscountRule discountRule = new PurchaseTotalDiscountRule(
-                ruleId,
-                name,
-                true,
-                minimumPurchase,
-                discountPercent
-            );
+            DiscountRule discountRule = DiscountFactory.CreateDiscount(
+                name, 
+                true, 
+                DiscountType.PurchaseTotal, 
+                discountPercent, 
+                minimumAmount: minimumPurchase, 
+                daysThreshold: null);
 
             discountController.AddDiscountRule(discountRule);
 
             Console.WriteLine("Purchase total discount rule added successfully.");
-            Console.WriteLine($"Generated Rule ID: {ruleId}");
         }
         catch (Exception ex)
         {

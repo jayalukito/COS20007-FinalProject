@@ -4,17 +4,12 @@ using MyProject.Interface;
 
 public class SalesReport : IDisplayable
 {
-    public string ReportId { get; set; } = string.Empty;
     public DateTime GeneratedAt { get; set; } = DateTime.Now;
     public List<SalesRecord> SalesRecords { get; set; } = new();
 
-    public SalesReport()
-    {
-    }
 
-    public SalesReport(string reportId, List<SalesRecord> salesRecords)
+    public SalesReport(List<SalesRecord> salesRecords)
     {
-        ReportId = reportId;
         SalesRecords = salesRecords;
         GeneratedAt = DateTime.Now;
     }
@@ -42,26 +37,31 @@ public class SalesReport : IDisplayable
             }
         }
 
-        return new SalesReport(ReportId + "-CATEGORY", filteredRecords);
+        if (filteredRecords.Count == 0)
+        {
+            throw new Exception("No sales records found for the specified category.");
+        }
+
+        return new SalesReport(filteredRecords);
     }
 
-    public SalesReport FilterByDateRange(DateTime startDate, DateTime endDate)
+    public SalesReport FilterByMonth(int month, int year)
     {
         List<SalesRecord> filteredRecords = new List<SalesRecord>();
 
+
         foreach (SalesRecord record in SalesRecords)
         {
-            DateTime recordDate = record.Timestamp.Date;
-
-            if (recordDate >= startDate.Date && recordDate <= endDate.Date)
+            Console.WriteLine(record.Timestamp.Month);
+            if (record.Timestamp.Month == month && record.Timestamp.Year == year)
             {
+                Console.WriteLine($"Month: {record.Timestamp.Month}, Year: {year}========");
                 filteredRecords.Add(record);
             }
         }
 
-        return new SalesReport(ReportId + "-DATE", filteredRecords);
+        return new SalesReport(filteredRecords);
     }
-
     public decimal GetTotalRevenue()
     {
         decimal totalRevenue = 0;
@@ -110,7 +110,6 @@ public class SalesReport : IDisplayable
     {
         string displayInformation =
             $"=== Sales Report ===\n" +
-            $"Report ID          : {ReportId}\n" +
             $"Generated At       : {GeneratedAt:dd/MM/yyyy HH:mm:ss}\n" +
             $"Total Transactions : {GetTotalTransactions()}\n" +
             $"Total Items Sold   : {GetTotalItemsSold()}\n" +

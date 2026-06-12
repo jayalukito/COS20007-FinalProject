@@ -1,0 +1,12 @@
+@startuml
+class PerishableItem {
+    + PerishableItem()
+    + PerishableItem(itemId:string, name:string, sellPrice:decimal, costPrice:decimal, stockQuantity:int, category:Category, expiryDate:DateTime)
+    + IsExpired() : bool
+    + DaysUntilExpiry() : int
+    + <<override>> GetDisplayInformation() : string
+}
+Item <|-- PerishableItem
+IExpirable <|-- PerishableItem
+PerishableItem --> "ExpiryDate" DateTime
+@enduml

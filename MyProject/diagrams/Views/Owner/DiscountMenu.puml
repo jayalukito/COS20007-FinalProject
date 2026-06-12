@@ -1,0 +1,15 @@
+@startuml
+class DiscountMenu {
+    + DiscountMenu()
+    + <<override>> Show() : void
+    - ShowDiscountRules() : void
+    - ShowAddExpiryDiscountRule() : void
+    - ShowAddPurchaseTotalDiscountRule() : void
+    - ShowActivateDiscountRule() : void
+    - ShowDeactivateDiscountRule() : void
+    - ShowRemoveDiscountRule() : void
+    - ShowDiscountRulesWithoutPause() : void
+}
+BaseMenu <|-- DiscountMenu
+DiscountMenu o-> "discountController" DiscountController
+@enduml

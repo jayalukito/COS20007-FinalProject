@@ -1,4 +1,5 @@
 using MyProject.Models;
+using MyProject.Enums;
 namespace MyProject.Utils
 {
     public static class InputHelper

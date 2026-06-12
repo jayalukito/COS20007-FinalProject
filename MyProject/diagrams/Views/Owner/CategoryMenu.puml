@@ -1,0 +1,11 @@
+@startuml
+class CategoryMenu {
+    + CategoryMenu()
+    + <<override>> Show() : void
+    - ShowCategories() : void
+    - ShowAddCategory() : void
+    - ShowRemoveCategory() : void
+}
+BaseMenu <|-- CategoryMenu
+CategoryMenu o-> "categoryController" CategoryController
+@enduml

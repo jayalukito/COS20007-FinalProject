@@ -175,4 +175,17 @@ public class Inventory
 
         return searchResults;
     } 
+
+    public bool StockChecker (Item selectedItem, int quantity)
+    {
+
+        Item temp = Items.Find(item => item.ItemId.Equals(selectedItem.ItemId, StringComparison.OrdinalIgnoreCase));
+
+        if(selectedItem.StockQuantity < quantity)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

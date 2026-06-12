@@ -31,6 +31,7 @@ public abstract class Item
         return displayInformation;
     }
 
+
     public virtual bool IsInStock()
     {
         return StockQuantity > 0;

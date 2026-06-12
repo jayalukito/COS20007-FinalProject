@@ -1,0 +1,13 @@
+@startuml
+class StockPurchaseRecord {
+    + RecordId : string <<get>> <<set>>
+    + ItemId : string <<get>> <<set>>
+    + ItemName : string <<get>> <<set>>
+    + QuantityPurchased : int <<get>> <<set>>
+    + CostPerUnit : decimal <<get>> <<set>>
+    + StockPurchaseRecord()
+    + StockPurchaseRecord(recordId:string, itemId:string, itemName:string, quantityPurchased:int, costPerUnit:decimal, timestamp:DateTime)
+    + GetTotalCost() : decimal
+}
+StockPurchaseRecord --> "Timestamp" DateTime
+@enduml

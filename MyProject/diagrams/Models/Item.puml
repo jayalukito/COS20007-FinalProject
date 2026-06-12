@@ -1,0 +1,17 @@
+@startuml
+abstract class Item {
+    + ItemId : string <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + CostPrice : decimal <<get>> <<set>>
+    + SellPrice : decimal <<get>> <<set>>
+    + StockQuantity : int <<get>> <<set>>
+    + Item()
+    + Item(itemId:string, name:string, sellPrice:decimal, costPrice:decimal, stockQuantity:int, category:Category)
+    + <<virtual>> GetDisplayInformation() : string
+    + <<virtual>> IsInStock() : bool
+    + <<virtual>> AddStock(quantity:int) : void
+    + <<virtual>> ReduceStock(quantity:int) : void
+    + <<virtual>> UpdatePrice(costPrice:decimal, sellPrice:decimal) : void
+}
+Item --> "Category" Category
+@enduml

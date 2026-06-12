@@ -1,0 +1,11 @@
+@startuml
+class ItemsMenu {
+    + <<override>> Show() : void
+    + ShowAllItems() : void
+    + AddItemToCart() : void
+    + SearchItem() : void
+}
+BaseMenu <|-- ItemsMenu
+ItemsMenu o-> "inventoryController" InventoryController
+ItemsMenu o-> "cartController" CartController
+@enduml

@@ -17,6 +17,7 @@ public class Customer: User
         return Receipts;
     }
 
+
     public Receipt? ViewReceipt(string receiptId)
     {
         return Receipts.Find(receipt => receipt.ReceiptId == receiptId);

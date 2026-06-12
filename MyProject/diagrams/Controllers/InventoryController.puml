@@ -1,0 +1,16 @@
+@startuml
+class InventoryController {
+    + InventoryController()
+    + AddItem(item:Item) : void
+    + RemoveItem(itemId:string) : void
+    + Restock(itemId:string, quantity:int) : void
+    + generateID() : void
+    + ShowAllItems() : List<Item>
+    + ShowNearExpiryItems(daysToExpiry:int) : List<Item>
+    + ShowLowStockItems(minimumStock:int) : List<Item>
+    + GetAllItems() : List<Item>
+    + GetItemById(itemId:string) : Item
+    + SearchItems(keyword:string) : List<Item>
+}
+InventoryController --> "supermarket" Supermarket
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+interface IDiscountable {
+    Apply(cart:Cart, inventory:Inventory) : decimal
+}
+@enduml

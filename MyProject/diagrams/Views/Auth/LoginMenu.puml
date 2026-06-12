@@ -1,0 +1,11 @@
+@startuml
+class LoginMenu {
+    + LoginMenu(authController:AuthController)
+    + <<override>> Show() : void
+    - CustomerLogin() : void
+    - CustomerRegister() : void
+    - OwnerLogin() : void
+}
+BaseMenu <|-- LoginMenu
+LoginMenu --> "authController" AuthController
+@enduml

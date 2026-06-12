@@ -4,6 +4,7 @@ using MyProject.Controllers;
 using MyProject.Models;
 using MyProject.Utils;
 using MyProject.Factories;
+using MyProject.Enums;
 
 public class InventoryMenu: BaseMenu
 {
@@ -76,7 +77,7 @@ public class InventoryMenu: BaseMenu
 
         try
         {
-            supermarket.Inventory.RemoveItem(itemId);
+            inventoryController.RemoveItem(itemId);
             Console.WriteLine("Item removed successfully.");
         }
         catch (Exception ex)

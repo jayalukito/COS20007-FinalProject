@@ -6,24 +6,16 @@ namespace MyProject.Views;
 
 public class OwnerMenu: BaseMenu
 {
-   
     private OwnerController ownerController = new();
-
     private InventoryMenu inventoryMenu = new();
     private CategoryMenu categoryMenu = new();
-
     private DiscountMenu discountMenu = new();
-
     private ReportMenu reportMenu = new();
 
     public OwnerMenu()
     {
     }
 
-    public OwnerMenu(OwnerController controller)
-    {
-        ownerController = controller;
-    }
 
     public override void Show()
     {
@@ -35,7 +27,7 @@ public class OwnerMenu: BaseMenu
 
             Console.WriteLine("=== Owner Menu ===");
             Console.WriteLine("1. Inventory Manager");
-            Console.WriteLine("2. View Receipts");
+            Console.WriteLine("2. View Sales Records");
             Console.WriteLine("3. Category Manager");
             Console.WriteLine("4. Discount Manager");
             Console.WriteLine("5. Generate Sales Report");
@@ -107,8 +99,9 @@ public class OwnerMenu: BaseMenu
     }
 
     private void ShowSalesRecord()
-    {
-        Console.Clear();
+    {   
+        
+  
         Console.WriteLine("=== Sales Records ===");
         SalesController salesController = new SalesController();
         List<SalesRecord> salesRecords = salesController.GetSalesRecords();

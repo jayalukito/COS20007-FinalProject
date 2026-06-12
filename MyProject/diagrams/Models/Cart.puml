@@ -1,0 +1,16 @@
+@startuml
+class Cart {
+    + CustomerId : string <<get>> <<set>>
+    + Cart()
+    + Cart(customerId:string)
+    + AddItem(item:CartItem) : void
+    + RemoveItem(itemId:string) : void
+    + GetTotal() : decimal
+    + Clear() : void
+    + IsEmpty() : bool
+    + UpdateQuantity(itemId:string, quantity:int) : void
+}
+class "List`1"<T> {
+}
+Cart o-> "Items<CartItem>" "List`1"
+@enduml

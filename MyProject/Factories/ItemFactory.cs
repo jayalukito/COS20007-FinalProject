@@ -1,5 +1,5 @@
 namespace MyProject.Factories;
-
+using MyProject.Enums;
 using MyProject.Models;
 
 public static class ItemFactory

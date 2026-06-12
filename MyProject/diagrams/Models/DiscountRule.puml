@@ -1,0 +1,15 @@
+@startuml
+abstract class DiscountRule {
+    + RuleId : string <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + IsActive : bool <<get>> <<set>>
+    # DiscountRule()
+    # DiscountRule(ruleId:string, name:string, isActive:bool)
+    + {abstract} Apply(cart:Cart, inventory:Inventory) : decimal
+    + Activate() : void
+    + Deactivate() : void
+    + <<virtual>> GetDisplayInformation() : string
+}
+IDiscountable <|-- DiscountRule
+IDisplayable <|-- DiscountRule
+@enduml

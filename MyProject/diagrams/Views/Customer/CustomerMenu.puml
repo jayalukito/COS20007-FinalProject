@@ -1,0 +1,16 @@
+@startuml
+class CustomerMenu {
+    + CustomerMenu()
+    + <<override>> Show() : void
+    + ShowItems() : void
+    + Checkout() : void
+    + ShowCart() : void
+    + ShowReceipts() : void
+}
+BaseMenu <|-- CustomerMenu
+CustomerMenu o-> "customerController" CustomerController
+CustomerMenu o-> "salesController" SalesController
+CustomerMenu o-> "checkoutMenu" CheckoutMenu
+CustomerMenu o-> "itemsMenu" ItemsMenu
+CustomerMenu o-> "cartMenu" CartMenu
+@enduml

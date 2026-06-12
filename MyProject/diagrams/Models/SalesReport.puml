@@ -1,0 +1,17 @@
+@startuml
+class SalesReport {
+    + SalesReport(salesRecords:List<SalesRecord>)
+    + FilterByCategory(categoryId:string) : SalesReport
+    + FilterByMonth(month:int, year:int) : SalesReport
+    + GetTotalRevenue() : decimal
+    + GetTotalDiscount() : decimal
+    + GetTotalTransactions() : int
+    + GetTotalItemsSold() : int
+    + GetDisplayInformation() : string
+}
+class "List`1"<T> {
+}
+IDisplayable <|-- SalesReport
+SalesReport o-> "GeneratedAt" DateTime
+SalesReport o-> "SalesRecords<SalesRecord>" "List`1"
+@enduml

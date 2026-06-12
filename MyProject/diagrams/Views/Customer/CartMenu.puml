@@ -1,0 +1,13 @@
+@startuml
+class CartMenu {
+    + <<override>> Show() : void
+    - ShowCart() : void
+    - ShowUpdateQuantity() : void
+    - ShowRemoveItem() : void
+    - ShowClearCart() : void
+    - DisplayCartItems(cart:Cart) : void
+}
+BaseMenu <|-- CartMenu
+CartMenu o-> "inventoryController" InventoryController
+CartMenu o-> "cartController" CartController
+@enduml

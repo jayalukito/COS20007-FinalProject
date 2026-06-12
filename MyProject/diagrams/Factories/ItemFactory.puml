@@ -1,0 +1,5 @@
+@startuml
+class ItemFactory <<static>> {
+    + {static} CreateItem(itemType:ItemType, name:string, sellPrice:decimal, costPrice:decimal, stockQuantity:int, category:Category, expiryDate:DateTime?, warrantyMonths:int?, brand:string?) : Item
+}
+@enduml

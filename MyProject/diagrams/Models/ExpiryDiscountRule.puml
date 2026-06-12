@@ -1,0 +1,13 @@
+@startuml
+class ExpiryDiscountRule {
+    + DaysThreshold : int <<get>> <<set>>
+    + DiscountPercent : decimal <<get>> <<set>>
+    + ExpiryDiscountRule()
+    + ExpiryDiscountRule(ruleId:string, name:string, isActive:bool, daysThreshold:int, discountPercent:decimal)
+    + <<override>> Apply(cart:Cart, inventory:Inventory) : decimal
+    + <<override>> GetDisplayInformation() : string
+}
+DiscountRule <|-- ExpiryDiscountRule
+IDiscountable <|-- ExpiryDiscountRule
+IDisplayable <|-- ExpiryDiscountRule
+@enduml

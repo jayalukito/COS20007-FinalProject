@@ -1,0 +1,16 @@
+@startuml
+class Receipt {
+    + ReceiptId : string <<get>> <<set>>
+    + CustomerId : string <<get>> <<set>>
+    + Total : decimal <<get>> <<set>>
+    + DiscountAmount : decimal <<get>> <<set>>
+    + Receipt()
+    + Receipt(receiptId:string, customerId:string, timestamp:DateTime, total:decimal, discountAmount:decimal, purchasedItems:List<CartItem>)
+    + GetDisplayInformation() : string
+}
+class "List`1"<T> {
+}
+IDisplayable <|-- Receipt
+Receipt --> "Timestamp" DateTime
+Receipt o-> "PurchasedItems<CartItem>" "List`1"
+@enduml

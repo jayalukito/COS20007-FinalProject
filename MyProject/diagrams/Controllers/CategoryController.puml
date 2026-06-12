@@ -1,0 +1,12 @@
+@startuml
+class CategoryController {
+    + CategoryController()
+    + ViewCategories() : List<Category>
+    + AddCategory(categoryName:string) : Category
+    + RemoveCategory(categoryId:string) : void
+    + GetCategoryById(categoryId:string) : Category?
+    + GetCategoryByName(categoryName:string) : Category?
+    - GenerateCategoryId() : string
+}
+CategoryController --> "supermarket" Supermarket
+@enduml

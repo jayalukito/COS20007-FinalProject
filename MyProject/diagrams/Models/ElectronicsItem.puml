@@ -1,0 +1,10 @@
+@startuml
+class ElectronicsItem {
+    + WarrantyMonths : int <<get>> <<set>>
+    + Brand : string <<get>> <<set>>
+    + ElectronicsItem()
+    + ElectronicsItem(itemId:string, name:string, sellPrice:decimal, costPrice:decimal, stockQuantity:int, category:Category, warrantyMonths:int, brand:string)
+    + <<override>> GetDisplayInformation() : string
+}
+Item <|-- ElectronicsItem
+@enduml

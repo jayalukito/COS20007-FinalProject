@@ -1,0 +1,17 @@
+@startuml
+class Supermarket <<sealed>> {
+    - {static} _instance : Supermarket?
+    + Customer : Customer?
+    + Owner : Owner?
+    - Supermarket()
+    - {static} SupermarketSeeder() : void
+}
+class "List`1"<T> {
+}
+Supermarket o-> "Inventory" Inventory
+Supermarket o-> "Categories<Category>" "List`1"
+Supermarket o-> "Receipts<Receipt>" "List`1"
+Supermarket o-> "SalesRecords<SalesRecord>" "List`1"
+Supermarket o-> "DiscountRules<DiscountRule>" "List`1"
+Supermarket --> "Instance" Supermarket
+@enduml

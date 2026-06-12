@@ -1,0 +1,22 @@
+@startuml
+class AuthController {
+    - <<const>> CustomerFilePath : string = "Data/users.txt"
+    - <<const>> OwnerId : string = "O001"
+    - <<const>> OwnerName : string = "Owner"
+    - <<const>> OwnerUsername : string = "owner"
+    - <<const>> OwnerPassword : string = "admin123"
+    + AuthController()
+    + RegisterCustomer(name:string, username:string, password:string) : Customer
+    + LoginCustomer(username:string, password:string) : Customer
+    + LoginOwner(username:string, password:string) : Owner
+    - LoadCustomersFromFile() : void
+    - SaveCustomersToFile() : void
+    - EnsureDataFileExists() : void
+    - GenerateCustomerId() : string
+    - ValidateRegisterInput(name:string, username:string, password:string) : void
+}
+class "List`1"<T> {
+}
+AuthController --> "supermarket" Supermarket
+AuthController o-> "customers<Customer>" "List`1"
+@enduml

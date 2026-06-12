@@ -41,11 +41,6 @@ public class DiscountController
             throw new Exception("Discount rule cannot be null.");
         }
 
-        if (string.IsNullOrWhiteSpace(discountRule.RuleId))
-        {
-            discountRule.RuleId = GenerateDiscountRuleId();
-        }
-
         if (string.IsNullOrWhiteSpace(discountRule.Name))
         {
             throw new Exception("Discount rule name cannot be empty.");
@@ -66,8 +61,6 @@ public class DiscountController
         {
             throw new Exception("Discount rule ID already exists.");
         }
-
-        ValidateDiscountRule(discountRule);
 
         supermarket.DiscountRules.Add(discountRule);
     }
@@ -135,65 +128,7 @@ public class DiscountController
         return totalDiscount;
     }
 
-    public string GenerateDiscountRuleId()
-    {
-        int highestNumber = 0;
+    
 
-        foreach (DiscountRule rule in supermarket.DiscountRules)
-        {
-            string numberText = rule.RuleId.Replace("D", "");
-
-            bool isNumber = int.TryParse(numberText, out int number);
-
-            if (isNumber)
-            {
-                if (number > highestNumber)
-                {
-                    highestNumber = number;
-                }
-            }
-        }
-
-        int newNumber = highestNumber + 1;
-
-        return "D" + newNumber.ToString("D3");
-    }
-
-    private void ValidateDiscountRule(DiscountRule discountRule)
-    {
-        if (discountRule is ExpiryDiscountRule expiryRule)
-        {
-            if (expiryRule.DaysThreshold <= 0)
-            {
-                throw new Exception("Days threshold must be greater than zero.");
-            }
-
-            if (expiryRule.DiscountPercent <= 0)
-            {
-                throw new Exception("Discount percent must be greater than zero.");
-            }
-
-            if (expiryRule.DiscountPercent > 100)
-            {
-                throw new Exception("Discount percent cannot be greater than 100.");
-            }
-        }
-        else if (discountRule is PurchaseTotalDiscountRule purchaseRule)
-        {
-            if (purchaseRule.MinimumAmount <= 0)
-            {
-                throw new Exception("Minimum purchase must be greater than zero.");
-            }
-
-            if (purchaseRule.DiscountPercent <= 0)
-            {
-                throw new Exception("Discount percent must be greater than zero.");
-            }
-
-            if (purchaseRule.DiscountPercent > 100)
-            {
-                throw new Exception("Discount percent cannot be greater than 100.");
-            }
-        }
-    }
+    
 }

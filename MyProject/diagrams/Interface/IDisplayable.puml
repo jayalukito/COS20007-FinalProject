@@ -1,0 +1,5 @@
+@startuml
+interface IDisplayable {
+    + GetDisplayInformation() : string
+}
+@enduml

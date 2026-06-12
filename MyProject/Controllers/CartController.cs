@@ -22,7 +22,7 @@ public class CartController
         CartItem cartItem = new CartItem(item, quantity);
         Cart cart = supermarket.Customer.Cart;
 
-        if(StockChecker(item, quantity) == false)
+        if(supermarket.Inventory.StockChecker(item, quantity) == false)
         {
             throw new Exception("Item is out of stock.");
         }
@@ -63,7 +63,7 @@ public class CartController
     public void UpdateQuantity(Item item, int quantity)
     {
 
-        if(!StockChecker(item, quantity))
+        if(!supermarket.Inventory.StockChecker(item, quantity))
         {
             throw new Exception("Item is out of stock.");
         };
@@ -86,18 +86,6 @@ public class CartController
         supermarket.Customer.Cart.Clear();
     }
 
-    public bool StockChecker(Item selectedItem, int quantity)
-    {
-        List<Item> items = supermarket.Inventory.ListAllItems();
-
-        Item temp = items.Find(item => item.ItemId.Equals(selectedItem.ItemId, StringComparison.OrdinalIgnoreCase));
-
-        if(selectedItem.StockQuantity < quantity)
-        {
-            return false;
-        }
-
-        return true;
-    }
+   
     
 }

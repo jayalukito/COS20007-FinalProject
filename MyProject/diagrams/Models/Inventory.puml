@@ -1,0 +1,18 @@
+@startuml
+class Inventory {
+    + Inventory()
+    + AddItem(item:Item) : void
+    + RemoveItem(itemId:string) : void
+    + GetItem(itemId:string) : Item?
+    + UpdateStock(itemId:string, quantity:int) : void
+    + ListAllItems() : List<Item>
+    + GetLowStockItems(minimumStock:int) : List<Item>
+    + GetNearExpiryItems(daysToExpiry:int) : List<Item>
+    + GetExpiredItems() : List<Item>
+    - GenerateItemId(item:Item) : string
+    + SearchItems(keyword:string) : List<Item>
+}
+class "List`1"<T> {
+}
+Inventory o-> "Items<Item>" "List`1"
+@enduml

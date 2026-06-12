@@ -1,6 +1,8 @@
+using MyProject.Interface;
+
 namespace MyProject.Models;
 
-public class PerishableItem : Item, IExpirable
+public class PerishableItem : Item, IExpirable, IDisplayable
 {
     public DateTime ExpiryDate { get; set; }
 

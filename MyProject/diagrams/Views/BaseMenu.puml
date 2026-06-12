@@ -1,0 +1,7 @@
+@startuml
+abstract class BaseMenu {
+    + BaseMenu()
+    # Pause() : void
+    + <<virtual>> Show() : void
+}
+@enduml

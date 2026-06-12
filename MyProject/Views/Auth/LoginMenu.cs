@@ -32,25 +32,28 @@ public class LoginMenu: BaseMenu
             switch (input)
             {
                 case "1":
+                    Console.Clear();
                     CustomerLogin();
                     break;
 
                 case "2":
+                    Console.Clear();
                     CustomerRegister();
                     break;
 
                 case "3":
+                    Console.Clear();
                     OwnerLogin();
                     break;
 
                 case "4":
+                    Console.Clear();
                     isRunning = false;
                     Console.WriteLine("Thank you for using the system.");
                     break;
 
                 default:
                     Console.WriteLine("Invalid choice.");
-                    Pause();
                     break;
             }
         }

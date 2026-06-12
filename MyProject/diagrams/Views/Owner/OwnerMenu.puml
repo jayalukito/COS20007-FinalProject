@@ -1,0 +1,18 @@
+@startuml
+class OwnerMenu {
+    + OwnerMenu()
+    + OwnerMenu(controller:OwnerController)
+    + <<override>> Show() : void
+    - ShowSalesReport() : void
+    - ShowInventoryManager() : void
+    - ShowDiscountManager() : void
+    - ShowCategoryManager() : void
+    - ShowSalesRecord() : void
+}
+BaseMenu <|-- OwnerMenu
+OwnerMenu o-> "ownerController" OwnerController
+OwnerMenu o-> "inventoryMenu" InventoryMenu
+OwnerMenu o-> "categoryMenu" CategoryMenu
+OwnerMenu o-> "discountMenu" DiscountMenu
+OwnerMenu o-> "reportMenu" ReportMenu
+@enduml

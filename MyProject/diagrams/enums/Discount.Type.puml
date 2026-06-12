@@ -1,0 +1,6 @@
+@startuml
+enum DiscountType {
+    Expiry= 1,
+    PurchaseTotal= 2,
+}
+@enduml

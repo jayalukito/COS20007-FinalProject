@@ -1,0 +1,13 @@
+@startuml
+class Customer {
+    + Customer()
+    + Customer(userId:string, name:string, username:string, password:string)
+    + ViewPurchaseHistory() : List<Receipt>
+    + ViewReceipt(receiptId:string) : Receipt?
+}
+class "List`1"<T> {
+}
+User <|-- Customer
+Customer o-> "Cart" Cart
+Customer o-> "Receipts<Receipt>" "List`1"
+@enduml

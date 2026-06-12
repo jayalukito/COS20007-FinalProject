@@ -1,0 +1,10 @@
+@startuml
+class ReportMenu {
+    + <<override>> Show() : void
+    - ShowSalesReportByCategory() : void
+    - ShowSalesReportByDate() : void
+}
+BaseMenu <|-- ReportMenu
+ReportMenu o-> "salesController" SalesController
+ReportMenu o-> "categoryController" CategoryController
+@enduml

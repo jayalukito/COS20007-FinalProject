@@ -1,0 +1,10 @@
+@startuml
+abstract class User {
+    + UserId : string <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + Username : string <<get>> <<set>>
+    + Password : string <<get>> <<set>>
+    # User()
+    # User(userId:string, name:string, username:string, password:string)
+}
+@enduml

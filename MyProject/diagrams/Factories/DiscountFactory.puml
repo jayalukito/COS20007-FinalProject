@@ -1,0 +1,7 @@
+@startuml
+class DiscountFactory <<static>> {
+    + {static} CreateDiscount(name:string, isActive:bool, discountType:DiscountType, discountPercent:decimal, daysThreshold:int?, minimumAmount:decimal?) : DiscountRule
+    + {static} GenerateDiscountRuleId() : string
+}
+DiscountFactory o-> "supermarket" Supermarket
+@enduml

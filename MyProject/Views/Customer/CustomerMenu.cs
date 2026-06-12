@@ -63,7 +63,6 @@ public class CustomerMenu:BaseMenu
                 default:
                     Console.Clear();
                     Console.WriteLine("Invalid choice.");
-                    Pause();
                     break;
             }
         }

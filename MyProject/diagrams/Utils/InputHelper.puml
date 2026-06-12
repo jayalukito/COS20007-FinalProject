@@ -1,0 +1,10 @@
+@startuml
+class InputHelper <<static>> {
+    + {static} ReadRequiredString(label:string) : string
+    + {static} ReadRequiredDecimal(label:string) : decimal
+    + {static} ReadRequiredInt(label:string) : int
+    + {static} ReadRequiredDate(label:string) : DateTime
+    + {static} ReadRequiredCategory(label:string) : Category
+    + {static} ReadRequiredItemType(label:string) : ItemType
+}
+@enduml

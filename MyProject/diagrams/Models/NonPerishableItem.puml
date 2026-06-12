@@ -1,0 +1,7 @@
+@startuml
+class NonPerishableItem {
+    + NonPerishableItem()
+    + NonPerishableItem(itemId:string, name:string, sellPrice:decimal, costPrice:decimal, quantity:int, category:Category)
+}
+Item <|-- NonPerishableItem
+@enduml

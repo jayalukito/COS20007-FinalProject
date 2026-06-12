@@ -1,0 +1,16 @@
+@startuml
+class InventoryMenu {
+    + InventoryMenu()
+    + <<override>> Show() : void
+    + ShowRemoveItem() : void
+    + ShowRestockItem() : void
+    + ShowAllItems() : void
+    + ShowNearExpiryItems() : void
+    + ShowLowStockItems() : void
+    + ShowAddItem() : void
+    - DisplayItemTypes() : void
+}
+BaseMenu <|-- InventoryMenu
+InventoryMenu o-> "inventoryController" InventoryController
+InventoryMenu o-> "supermarket" Supermarket
+@enduml

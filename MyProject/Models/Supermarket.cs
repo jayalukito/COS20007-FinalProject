@@ -121,6 +121,8 @@ public sealed class Supermarket
                 household,
                 12,
                 "Philips"
+
+                
             );
 
             _instance.Inventory.AddItem(milk);

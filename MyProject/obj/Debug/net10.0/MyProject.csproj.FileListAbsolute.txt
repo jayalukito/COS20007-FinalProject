@@ -12,3 +12,4 @@ D:\KULIAH\Swinburne\Semester 1 - 2026\OOP\FinalProject\MyProject\obj\Debug\net10
 D:\KULIAH\Swinburne\Semester 1 - 2026\OOP\FinalProject\MyProject\obj\Debug\net10.0\MyProject.pdb
 D:\KULIAH\Swinburne\Semester 1 - 2026\OOP\FinalProject\MyProject\obj\Debug\net10.0\MyProject.genruntimeconfig.cache
 D:\KULIAH\Swinburne\Semester 1 - 2026\OOP\FinalProject\MyProject\obj\Debug\net10.0\ref\MyProject.dll
+D:\KULIAH\Swinburne\Semester 1 - 2026\OOP\FinalProject\MyProject\obj\Debug\net10.0\MyProject.sourcelink.json

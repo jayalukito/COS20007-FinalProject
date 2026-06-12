@@ -1,0 +1,460 @@
+@startuml
+class Program {
+    + {static} Main(args:string[]) : void
+}
+class AuthController {
+    - <<const>> CustomerFilePath : string = "Data/users.txt"
+    - <<const>> OwnerId : string = "O001"
+    - <<const>> OwnerName : string = "Owner"
+    - <<const>> OwnerUsername : string = "owner"
+    - <<const>> OwnerPassword : string = "admin123"
+    + AuthController()
+    + RegisterCustomer(name:string, username:string, password:string) : Customer
+    + LoginCustomer(username:string, password:string) : Customer
+    + LoginOwner(username:string, password:string) : Owner
+    - LoadCustomersFromFile() : void
+    - SaveCustomersToFile() : void
+    - EnsureDataFileExists() : void
+    - GenerateCustomerId() : string
+    - ValidateRegisterInput(name:string, username:string, password:string) : void
+}
+class "List`1"<T> {
+}
+AuthController --> "supermarket" Supermarket
+AuthController o-> "customers<Customer>" "List`1"
+class CartController {
+    + CartController()
+    + GetCart() : Cart
+    + AddItemToCart(item:Item, quantity:int) : void
+    + RemoveItemFromCart(itemId:string) : void
+    + UpdateQuantity(item:Item, quantity:int) : void
+    + ClearCart() : void
+    + StockChecker(selectedItem:Item, quantity:int) : bool
+}
+CartController o-> "supermarket" Supermarket
+class CategoryController {
+    + CategoryController()
+    + ViewCategories() : List<Category>
+    + AddCategory(categoryName:string) : Category
+    + RemoveCategory(categoryId:string) : void
+    + GetCategoryById(categoryId:string) : Category?
+    + GetCategoryByName(categoryName:string) : Category?
+    - GenerateCategoryId() : string
+}
+CategoryController --> "supermarket" Supermarket
+class CustomerController {
+    + CustomerController()
+    + CustomerController(inventory:Inventory, customer:Customer, salesReport:SalesReport, discountRules:List<DiscountRule>)
+    + Logout() : void
+    + GetAllReceipts() : List<Receipt>
+}
+CustomerController o-> "supermarket" Supermarket
+class DiscountController {
+    + DiscountController()
+    + GetAllDiscountRules() : List<DiscountRule>
+    + GetDiscountRuleById(ruleId:string) : DiscountRule?
+    + AddDiscountRule(discountRule:DiscountRule) : void
+    + RemoveDiscountRule(ruleId:string) : void
+    + ActivateDiscountRule(ruleId:string) : void
+    + DeactivateDiscountRule(ruleId:string) : void
+    + CalculateDiscount(cart:Cart) : decimal
+}
+DiscountController --> "supermarket" Supermarket
+class InventoryController {
+    + InventoryController()
+    + AddItem(item:Item) : void
+    + RemoveItem(itemId:string) : void
+    + Restock(itemId:string, quantity:int) : void
+    + generateID() : void
+    + ShowAllItems() : List<Item>
+    + ShowNearExpiryItems(daysToExpiry:int) : List<Item>
+    + ShowLowStockItems(minimumStock:int) : List<Item>
+    + GetAllItems() : List<Item>
+    + GetItemById(itemId:string) : Item
+    + SearchItems(keyword:string) : List<Item>
+}
+InventoryController --> "supermarket" Supermarket
+class OwnerController {
+    + OwnerController()
+    + OwnerController(owner:Owner)
+    + ViewStockReport() : List<Item>
+    + ViewLowStock(minimumStock:int) : List<Item>
+    + ViewSalesReport(startDate:DateTime, endDate:DateTime) : string
+    + ViewDiscountRules() : List<DiscountRule>
+    + ViewStockPurchaseRecords() : List<StockPurchaseRecord>
+    + Logout() : void
+}
+class SalesController {
+    + SalesController()
+    + GetSalesRecords() : List<SalesRecord>
+    + Checkout() : Receipt
+    - ValidateCartStock(cart:Cart) : void
+    - ReduceInventoryStock(cart:Cart) : void
+    - CreatePurchasedItemsSnapshot(cart:Cart) : List<CartItem>
+    - GenerateReceiptId() : string
+    - GenerateSalesRecordId() : string
+    + GenerateReportByCategory(categoryId:string) : SalesReport
+    + GenerateReportByMonth(month:int, year:int) : SalesReport
+}
+SalesController o-> "supermarket" Supermarket
+SalesController --> "salesReport" SalesReport
+enum DiscountType {
+    Expiry= 1,
+    PurchaseTotal= 2,
+}
+enum ItemType {
+    Perishable= 1,
+    Electronics= 2,
+    NonPerishable= 3,
+}
+class DiscountFactory <<static>> {
+    + {static} CreateDiscount(name:string, isActive:bool, discountType:DiscountType, discountPercent:decimal, daysThreshold:int?, minimumAmount:decimal?) : DiscountRule
+    + {static} GenerateDiscountRuleId() : string
+}
+DiscountFactory o-> "supermarket" Supermarket
+class ItemFactory <<static>> {
+    + {static} CreateItem(itemType:ItemType, name:string, sellPrice:decimal, costPrice:decimal, stockQuantity:int, category:Category, expiryDate:DateTime?, warrantyMonths:int?, brand:string?) : Item
+}
+interface IDiscountable {
+    Apply(cart:Cart, inventory:Inventory) : decimal
+}
+interface IDisplayable {
+    + GetDisplayInformation() : string
+}
+interface IExpirable {
+    IsExpired() : bool
+    DaysUntilExpiry() : int
+}
+IExpirable --> "ExpiryDate" DateTime
+class Cart {
+    + CustomerId : string <<get>> <<set>>
+    + Cart()
+    + Cart(customerId:string)
+    + AddItem(item:CartItem) : void
+    + RemoveItem(itemId:string) : void
+    + GetTotal() : decimal
+    + Clear() : void
+    + IsEmpty() : bool
+    + UpdateQuantity(itemId:string, quantity:int) : void
+}
+class "List`1"<T> {
+}
+Cart o-> "Items<CartItem>" "List`1"
+class CartItem {
+    + Quantity : int <<get>> <<set>>
+    + CartItem(item:Item, quantity:int)
+    + GetSubtotal() : decimal
+    + UpdateQuantity(quantity:int) : void
+    + AddQuantity(quantity:int) : void
+}
+CartItem --> "Item" Item
+class Category {
+    + CategoryId : string <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + Category()
+    + Category(categoryId:string, name:string)
+    + GetDisplayInformation() : string
+}
+class Customer {
+    + Customer()
+    + Customer(userId:string, name:string, username:string, password:string)
+    + ViewPurchaseHistory() : List<Receipt>
+    + ViewReceipt(receiptId:string) : Receipt?
+}
+class "List`1"<T> {
+}
+User <|-- Customer
+Customer o-> "Cart" Cart
+Customer o-> "Receipts<Receipt>" "List`1"
+abstract class DiscountRule {
+    + RuleId : string <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + IsActive : bool <<get>> <<set>>
+    # DiscountRule()
+    # DiscountRule(ruleId:string, name:string, isActive:bool)
+    + {abstract} Apply(cart:Cart, inventory:Inventory) : decimal
+    + Activate() : void
+    + Deactivate() : void
+    + <<virtual>> GetDisplayInformation() : string
+}
+IDiscountable <|-- DiscountRule
+IDisplayable <|-- DiscountRule
+class ElectronicsItem {
+    + WarrantyMonths : int <<get>> <<set>>
+    + Brand : string <<get>> <<set>>
+    + ElectronicsItem()
+    + ElectronicsItem(itemId:string, name:string, sellPrice:decimal, costPrice:decimal, stockQuantity:int, category:Category, warrantyMonths:int, brand:string)
+    + <<override>> GetDisplayInformation() : string
+}
+Item <|-- ElectronicsItem
+class ExpiryDiscountRule {
+    + DaysThreshold : int <<get>> <<set>>
+    + DiscountPercent : decimal <<get>> <<set>>
+    + ExpiryDiscountRule()
+    + ExpiryDiscountRule(ruleId:string, name:string, isActive:bool, daysThreshold:int, discountPercent:decimal)
+    + <<override>> Apply(cart:Cart, inventory:Inventory) : decimal
+    + <<override>> GetDisplayInformation() : string
+}
+DiscountRule <|-- ExpiryDiscountRule
+IDiscountable <|-- ExpiryDiscountRule
+IDisplayable <|-- ExpiryDiscountRule
+class Inventory {
+    + Inventory()
+    + AddItem(item:Item) : void
+    + RemoveItem(itemId:string) : void
+    + GetItem(itemId:string) : Item?
+    + UpdateStock(itemId:string, quantity:int) : void
+    + ListAllItems() : List<Item>
+    + GetLowStockItems(minimumStock:int) : List<Item>
+    + GetNearExpiryItems(daysToExpiry:int) : List<Item>
+    + GetExpiredItems() : List<Item>
+    - GenerateItemId(item:Item) : string
+    + SearchItems(keyword:string) : List<Item>
+}
+class "List`1"<T> {
+}
+Inventory o-> "Items<Item>" "List`1"
+abstract class Item {
+    + ItemId : string <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + CostPrice : decimal <<get>> <<set>>
+    + SellPrice : decimal <<get>> <<set>>
+    + StockQuantity : int <<get>> <<set>>
+    + Item()
+    + Item(itemId:string, name:string, sellPrice:decimal, costPrice:decimal, stockQuantity:int, category:Category)
+    + <<virtual>> GetDisplayInformation() : string
+    + <<virtual>> IsInStock() : bool
+    + <<virtual>> AddStock(quantity:int) : void
+    + <<virtual>> ReduceStock(quantity:int) : void
+    + <<virtual>> UpdatePrice(costPrice:decimal, sellPrice:decimal) : void
+}
+Item --> "Category" Category
+class NonPerishableItem {
+    + NonPerishableItem()
+    + NonPerishableItem(itemId:string, name:string, sellPrice:decimal, costPrice:decimal, quantity:int, category:Category)
+}
+Item <|-- NonPerishableItem
+class Owner {
+    + Owner(userId:string, name:string, username:string, password:string)
+}
+User <|-- Owner
+class PerishableItem {
+    + PerishableItem()
+    + PerishableItem(itemId:string, name:string, sellPrice:decimal, costPrice:decimal, stockQuantity:int, category:Category, expiryDate:DateTime)
+    + IsExpired() : bool
+    + DaysUntilExpiry() : int
+    + <<override>> GetDisplayInformation() : string
+}
+Item <|-- PerishableItem
+IExpirable <|-- PerishableItem
+PerishableItem --> "ExpiryDate" DateTime
+class PurchaseTotalDiscountRule {
+    + MinimumAmount : decimal <<get>> <<set>>
+    + DiscountPercent : decimal <<get>> <<set>>
+    + PurchaseTotalDiscountRule()
+    + PurchaseTotalDiscountRule(ruleId:string, name:string, isActive:bool, minimumAmount:decimal, discountPercent:decimal)
+    + <<override>> Apply(cart:Cart, inventory:Inventory) : decimal
+    + <<override>> GetDisplayInformation() : string
+}
+DiscountRule <|-- PurchaseTotalDiscountRule
+IDiscountable <|-- PurchaseTotalDiscountRule
+class Receipt {
+    + ReceiptId : string <<get>> <<set>>
+    + CustomerId : string <<get>> <<set>>
+    + Total : decimal <<get>> <<set>>
+    + DiscountAmount : decimal <<get>> <<set>>
+    + Receipt()
+    + Receipt(receiptId:string, customerId:string, timestamp:DateTime, total:decimal, discountAmount:decimal, purchasedItems:List<CartItem>)
+    + GetDisplayInformation() : string
+}
+class "List`1"<T> {
+}
+IDisplayable <|-- Receipt
+Receipt --> "Timestamp" DateTime
+Receipt o-> "PurchasedItems<CartItem>" "List`1"
+class SalesRecord {
+    + RecordId : string <<get>> <<set>>
+    + CustomerId : string <<get>> <<set>>
+    + Total : decimal <<get>> <<set>>
+    + DiscountAmount : decimal <<get>> <<set>>
+    + SalesRecord()
+    + SalesRecord(recordId:string, customerId:string, timestamp:DateTime, total:decimal, discountAmount:decimal, itemsSold:List<CartItem>)
+    + GetDisplayInformation() : string
+}
+class "List`1"<T> {
+}
+IDisplayable <|-- SalesRecord
+SalesRecord --> "Timestamp" DateTime
+SalesRecord o-> "ItemsSold<CartItem>" "List`1"
+class SalesReport {
+    + SalesReport(salesRecords:List<SalesRecord>)
+    + FilterByCategory(categoryId:string) : SalesReport
+    + FilterByMonth(month:int, year:int) : SalesReport
+    + GetTotalRevenue() : decimal
+    + GetTotalDiscount() : decimal
+    + GetTotalTransactions() : int
+    + GetTotalItemsSold() : int
+    + GetDisplayInformation() : string
+}
+class "List`1"<T> {
+}
+IDisplayable <|-- SalesReport
+SalesReport o-> "GeneratedAt" DateTime
+SalesReport o-> "SalesRecords<SalesRecord>" "List`1"
+class StockPurchaseRecord {
+    + RecordId : string <<get>> <<set>>
+    + ItemId : string <<get>> <<set>>
+    + ItemName : string <<get>> <<set>>
+    + QuantityPurchased : int <<get>> <<set>>
+    + CostPerUnit : decimal <<get>> <<set>>
+    + StockPurchaseRecord()
+    + StockPurchaseRecord(recordId:string, itemId:string, itemName:string, quantityPurchased:int, costPerUnit:decimal, timestamp:DateTime)
+    + GetTotalCost() : decimal
+}
+StockPurchaseRecord --> "Timestamp" DateTime
+class Supermarket <<sealed>> {
+    - {static} _instance : Supermarket?
+    + Customer : Customer?
+    + Owner : Owner?
+    - Supermarket()
+    - {static} SupermarketSeeder() : void
+}
+class "List`1"<T> {
+}
+Supermarket o-> "Inventory" Inventory
+Supermarket o-> "Categories<Category>" "List`1"
+Supermarket o-> "Receipts<Receipt>" "List`1"
+Supermarket o-> "SalesRecords<SalesRecord>" "List`1"
+Supermarket o-> "DiscountRules<DiscountRule>" "List`1"
+Supermarket --> "Instance" Supermarket
+abstract class User {
+    + UserId : string <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + Username : string <<get>> <<set>>
+    + Password : string <<get>> <<set>>
+    # User()
+    # User(userId:string, name:string, username:string, password:string)
+}
+class InputHelper <<static>> {
+    + {static} ReadRequiredString(label:string) : string
+    + {static} ReadRequiredDecimal(label:string) : decimal
+    + {static} ReadRequiredInt(label:string) : int
+    + {static} ReadRequiredDate(label:string) : DateTime
+    + {static} ReadRequiredCategory(label:string) : Category
+    + {static} ReadRequiredItemType(label:string) : ItemType
+}
+abstract class BaseMenu {
+    + BaseMenu()
+    # Pause() : void
+    + <<virtual>> Show() : void
+}
+class LoginMenu {
+    + LoginMenu(authController:AuthController)
+    + <<override>> Show() : void
+    - CustomerLogin() : void
+    - CustomerRegister() : void
+    - OwnerLogin() : void
+}
+BaseMenu <|-- LoginMenu
+LoginMenu --> "authController" AuthController
+class CartMenu {
+    + <<override>> Show() : void
+    - ShowCart() : void
+    - ShowUpdateQuantity() : void
+    - ShowRemoveItem() : void
+    - ShowClearCart() : void
+    - DisplayCartItems(cart:Cart) : void
+}
+BaseMenu <|-- CartMenu
+CartMenu o-> "inventoryController" InventoryController
+CartMenu o-> "cartController" CartController
+class CheckoutMenu {
+    + CheckoutMenu()
+    + <<override>> Show() : void
+}
+BaseMenu <|-- CheckoutMenu
+CheckoutMenu o-> "salesController" SalesController
+class CustomerMenu {
+    + CustomerMenu()
+    + <<override>> Show() : void
+    + ShowItems() : void
+    + Checkout() : void
+    + ShowCart() : void
+    + ShowReceipts() : void
+}
+BaseMenu <|-- CustomerMenu
+CustomerMenu o-> "customerController" CustomerController
+CustomerMenu o-> "salesController" SalesController
+CustomerMenu o-> "checkoutMenu" CheckoutMenu
+CustomerMenu o-> "itemsMenu" ItemsMenu
+CustomerMenu o-> "cartMenu" CartMenu
+class ItemsMenu {
+    + <<override>> Show() : void
+    + ShowAllItems() : void
+    + AddItemToCart() : void
+    + SearchItem() : void
+}
+BaseMenu <|-- ItemsMenu
+ItemsMenu o-> "inventoryController" InventoryController
+ItemsMenu o-> "cartController" CartController
+class CategoryMenu {
+    + CategoryMenu()
+    + <<override>> Show() : void
+    - ShowCategories() : void
+    - ShowAddCategory() : void
+    - ShowRemoveCategory() : void
+}
+BaseMenu <|-- CategoryMenu
+CategoryMenu o-> "categoryController" CategoryController
+class DiscountMenu {
+    + DiscountMenu()
+    + <<override>> Show() : void
+    - ShowDiscountRules() : void
+    - ShowAddExpiryDiscountRule() : void
+    - ShowAddPurchaseTotalDiscountRule() : void
+    - ShowActivateDiscountRule() : void
+    - ShowDeactivateDiscountRule() : void
+    - ShowRemoveDiscountRule() : void
+    - ShowDiscountRulesWithoutPause() : void
+}
+BaseMenu <|-- DiscountMenu
+DiscountMenu o-> "discountController" DiscountController
+class InventoryMenu {
+    + InventoryMenu()
+    + <<override>> Show() : void
+    + ShowRemoveItem() : void
+    + ShowRestockItem() : void
+    + ShowAllItems() : void
+    + ShowNearExpiryItems() : void
+    + ShowLowStockItems() : void
+    + ShowAddItem() : void
+    - DisplayItemTypes() : void
+}
+BaseMenu <|-- InventoryMenu
+InventoryMenu o-> "inventoryController" InventoryController
+InventoryMenu o-> "supermarket" Supermarket
+class OwnerMenu {
+    + OwnerMenu()
+    + OwnerMenu(controller:OwnerController)
+    + <<override>> Show() : void
+    - ShowSalesReport() : void
+    - ShowInventoryManager() : void
+    - ShowDiscountManager() : void
+    - ShowCategoryManager() : void
+    - ShowSalesRecord() : void
+}
+BaseMenu <|-- OwnerMenu
+OwnerMenu o-> "ownerController" OwnerController
+OwnerMenu o-> "inventoryMenu" InventoryMenu
+OwnerMenu o-> "categoryMenu" CategoryMenu
+OwnerMenu o-> "discountMenu" DiscountMenu
+OwnerMenu o-> "reportMenu" ReportMenu
+class ReportMenu {
+    + <<override>> Show() : void
+    - ShowSalesReportByCategory() : void
+    - ShowSalesReportByDate() : void
+}
+BaseMenu <|-- ReportMenu
+ReportMenu o-> "salesController" SalesController
+ReportMenu o-> "categoryController" CategoryController
+@enduml

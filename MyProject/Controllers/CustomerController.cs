@@ -11,10 +11,6 @@ public class CustomerController
     {
     }
 
-    public CustomerController(Inventory inventory, Customer customer, SalesReport salesReport, List<DiscountRule> discountRules)
-    {
-    }
-
 
     public void Logout()
     {

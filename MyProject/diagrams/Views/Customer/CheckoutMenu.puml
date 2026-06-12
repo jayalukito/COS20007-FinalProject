@@ -1,0 +1,8 @@
+@startuml
+class CheckoutMenu {
+    + CheckoutMenu()
+    + <<override>> Show() : void
+}
+BaseMenu <|-- CheckoutMenu
+CheckoutMenu o-> "salesController" SalesController
+@enduml

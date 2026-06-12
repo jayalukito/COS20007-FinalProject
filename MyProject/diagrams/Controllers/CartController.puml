@@ -1,0 +1,12 @@
+@startuml
+class CartController {
+    + CartController()
+    + GetCart() : Cart
+    + AddItemToCart(item:Item, quantity:int) : void
+    + RemoveItemFromCart(itemId:string) : void
+    + UpdateQuantity(item:Item, quantity:int) : void
+    + ClearCart() : void
+    + StockChecker(selectedItem:Item, quantity:int) : bool
+}
+CartController o-> "supermarket" Supermarket
+@enduml

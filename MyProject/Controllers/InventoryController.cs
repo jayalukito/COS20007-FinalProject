@@ -13,19 +13,9 @@ public class InventoryController
         supermarket.Inventory.AddItem(item);
     }
 
-    public void RemoveItem(string itemId)
-    {
-        
-    }
-
     public void Restock(string itemId, int quantity)
     {
         supermarket.Inventory.UpdateStock(itemId, quantity);
-    }
-
-    public void generateID()
-    {
-        
     }
 
     public List<Item> ShowAllItems()
@@ -43,6 +33,7 @@ public class InventoryController
         return supermarket.Inventory.GetLowStockItems(minimumStock);
     }
 
+
     public List<Item>  GetAllItems()
     {
         return supermarket.Inventory.ListAllItems();
@@ -56,5 +47,10 @@ public class InventoryController
     public List<Item> SearchItems(string keyword)
     {
         return supermarket.Inventory.SearchItems(keyword);
+    }
+
+    public void RemoveItem(string itemId)
+    {
+        supermarket.Inventory.RemoveItem(itemId);
     }
 }

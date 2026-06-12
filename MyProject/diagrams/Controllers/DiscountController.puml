@@ -1,0 +1,13 @@
+@startuml
+class DiscountController {
+    + DiscountController()
+    + GetAllDiscountRules() : List<DiscountRule>
+    + GetDiscountRuleById(ruleId:string) : DiscountRule?
+    + AddDiscountRule(discountRule:DiscountRule) : void
+    + RemoveDiscountRule(ruleId:string) : void
+    + ActivateDiscountRule(ruleId:string) : void
+    + DeactivateDiscountRule(ruleId:string) : void
+    + CalculateDiscount(cart:Cart) : decimal
+}
+DiscountController --> "supermarket" Supermarket
+@enduml

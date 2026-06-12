@@ -1,0 +1,16 @@
+@startuml
+class SalesRecord {
+    + RecordId : string <<get>> <<set>>
+    + CustomerId : string <<get>> <<set>>
+    + Total : decimal <<get>> <<set>>
+    + DiscountAmount : decimal <<get>> <<set>>
+    + SalesRecord()
+    + SalesRecord(recordId:string, customerId:string, timestamp:DateTime, total:decimal, discountAmount:decimal, itemsSold:List<CartItem>)
+    + GetDisplayInformation() : string
+}
+class "List`1"<T> {
+}
+IDisplayable <|-- SalesRecord
+SalesRecord --> "Timestamp" DateTime
+SalesRecord o-> "ItemsSold<CartItem>" "List`1"
+@enduml

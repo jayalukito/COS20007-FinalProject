@@ -1,0 +1,9 @@
+@startuml
+class CustomerController {
+    + CustomerController()
+    + CustomerController(inventory:Inventory, customer:Customer, salesReport:SalesReport, discountRules:List<DiscountRule>)
+    + Logout() : void
+    + GetAllReceipts() : List<Receipt>
+}
+CustomerController o-> "supermarket" Supermarket
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class OwnerController {
+    + OwnerController()
+    + OwnerController(owner:Owner)
+    + ViewStockReport() : List<Item>
+    + ViewLowStock(minimumStock:int) : List<Item>
+    + ViewSalesReport(startDate:DateTime, endDate:DateTime) : string
+    + ViewDiscountRules() : List<DiscountRule>
+    + ViewStockPurchaseRecords() : List<StockPurchaseRecord>
+    + Logout() : void
+}
+@enduml
